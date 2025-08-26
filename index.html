@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"> 
-    <title>CallingApp</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>VibeSync</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
@@ -70,23 +70,16 @@
         #chat-send-btn { background: var(--wa-accent-blue); border: none; color: white; width: 44px; height: 44px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-bottom: 2px; transition: background-color 0.2s; }
         #chat-send-btn:hover { background-color: #2aa3e0; }
         #chat-send-btn svg { width: 24px; height: 24px; fill: white; margin-left: 2px; }
-        .call-view { visibility: hidden; opacity: 0; pointer-events: none; transition: opacity 0.3s, visibility 0.3s; position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 20; background-color: #222; justify-content: center; align-items: center; display: flex; flex-direction: column;}
-        .call-view.visible { visibility: visible; opacity: 1; pointer-events: auto; }
+        .call-view { display: none; position: absolute; top: 0; left: 0; z-index: 20; background-color: #222; justify-content: center; align-items: center; }
         #video-call-view { background-color: black; }
         #remote-video { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; }
-        #local-video-canvas { width: 100px; height: 140px; position: absolute; bottom: 120px; right: 20px; border: 2px solid rgba(255,255,255,0.5); border-radius: 10px; cursor: move; object-fit: cover; box-shadow: 0 5px 15px rgba(0,0,0,0.3); transition: filter 0.3s; }
-        #local-video-canvas.filter-smooth { filter: brightness(1.05) contrast(1.05) saturate(1.1); }
-        #local-video-canvas.filter-vivid { filter: sepia(0.2) hue-rotate(-10deg) saturate(1.2); }
+        #local-video-canvas { width: 100px; height: 140px; position: absolute; bottom: 120px; right: 20px; border: 2px solid rgba(255,255,255,0.5); border-radius: 10px; cursor: move; object-fit: cover; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
         .call-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: space-between; align-items: center; padding: 60px 20px 50px; background: linear-gradient(to bottom, rgba(0,0,0,0.6), transparent 40%, transparent 60%, rgba(0,0,0,0.7)); }
         .caller-info { text-align: center; color: white; text-shadow: 0 2px 5px rgba(0,0,0,0.5); }
         .caller-info .emoji { font-size: 80px; } .caller-info .name { font-size: 28px; font-weight: 500; margin-top: 10px; } .caller-info .status { font-size: 16px; color: #ccc; margin-top: 5px; }
         .call-controls { display: flex; gap: 30px; }
         .call-controls button { width: 70px; height: 70px; border-radius: 50%; border: none; color: white; font-family: 'Roboto', sans-serif; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
         .end-call-btn { background-color: #e91e63; } .accept-call-btn { background-color: #4CAF50; }
-        #filters-btn { position: absolute; top: 60px; left: 20px; width: 44px; height: 44px; background-color: rgba(255,255,255,0.2); backdrop-filter: blur(5px); }
-        #filter-options { display: none; position: absolute; top: 110px; left: 20px; background-color: rgba(0,0,0,0.7); backdrop-filter: blur(5px); border-radius: 8px; padding: 5px; display: flex; flex-direction: column; gap: 5px; }
-        #filter-options button { width: 100%; background: none; border: none; color: white; padding: 8px 12px; text-align: left; border-radius: 5px; cursor: pointer; }
-        #filter-options button:hover, #filter-options button.active { background-color: rgba(255,255,255,0.2); }
         .modal { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); justify-content: center; align-items: center; z-index: 30; }
         .modal-content { background-color: #fff; padding: 25px; border-radius: 12px; width: 90%; max-width: 400px; display: flex; flex-direction: column; gap: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
         .modal-content h2 { text-align: center; color: var(--wa-header-bg); font-weight: 500; }
@@ -95,12 +88,11 @@
         .modal-content button.secondary { background-color: var(--wa-text-secondary); }
         .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 10px; }
         #incoming-call-modal .caller-info { color: var(--wa-text-primary); text-shadow: none; padding-bottom: 20px; }
-        #profile-info-display p { padding: 5px 0; font-size: 16px; }
-        #profile-info-display strong { color: var(--wa-header-bg); font-weight: 500; }
+        #profile-info-display p { padding: 5px 0; font-size: 16px; } #profile-info-display strong { color: var(--wa-header-bg); font-weight: 500; }
         #blocked-users-list .list-item { background-color: transparent; }
         #blocked-users-list .list-item-actions button { background-color: var(--wa-accent-blue); font-size: 12px; padding: 6px 10px; }
-        #music-search-modal .modal-content { height: 80%; }
-        #music-search-results { flex-grow: 1; overflow-y: auto; margin-top: 15px; }
+        #search-modal .modal-content { height: 80%; }
+        #search-results { flex-grow: 1; overflow-y: auto; margin-top: 15px; }
         .suggestion-item { display: flex; align-items: center; padding: 8px; cursor: pointer; border-radius: 6px; }
         .suggestion-item:hover { background-color: #f0f0f0; }
         .suggestion-item img { width: 50px; height: 50px; margin-right: 12px; border-radius: 4px; object-fit: cover; }
@@ -116,46 +108,85 @@
         #music-remove-btn { background: none; border: none; cursor: pointer; margin-left: auto; padding: 5px; } #music-remove-btn svg { width: 20px; height: 20px; fill: var(--wa-text-secondary); }
         #music-progress-container { width: 100%; height: 4px; background-color: #ddd; cursor: pointer; margin-top: 8px; border-radius: 2px; }
         #music-progress-bar { width: 0; height: 100%; background-color: var(--wa-accent-blue); border-radius: 2px; }
+
+        /* Video Watch View Styles */
+        #video-watch-view { display: none; background-color: #000; z-index: 15; position: relative; }
+        #video-watch-player-container { width: 100%; height: auto; aspect-ratio: 16/9; background-color: #000; }
+        #video-watch-player { width: 100%; height: 100%; }
+        .video-watch-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: space-between; }
+        .video-watch-header { display: flex; justify-content: space-between; align-items: center; padding: 10px; background: linear-gradient(to bottom, rgba(0,0,0,0.7), transparent); }
+        .video-watch-header h3 { color: white; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        #close-watch-view-btn { color: white; }
+        #reaction-bar { display: none; justify-content: center; align-items: center; gap: 15px; padding: 15px; background: linear-gradient(to top, rgba(0,0,0,0.7), transparent); }
+        #reaction-bar button { background: rgba(255,255,255,0.2); border: none; border-radius: 50%; width: 50px; height: 50px; font-size: 28px; cursor: pointer; backdrop-filter: blur(5px); }
+        #video-watch-view.fullscreen #reaction-bar { display: flex; }
+        #reaction-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: hidden; }
+        .reaction-emoji { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 80px; animation: pop-and-fade 2s ease-out forwards; }
+        @keyframes pop-and-fade {
+            0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
+            50% { transform: translate(-50%, -60%) scale(1.2); opacity: 1; }
+            100% { transform: translate(-50%, -70%) scale(1.5); opacity: 0; }
+        }
     </style>
 </head>
 <body>
     <div id="app-container">
         <!-- Auth View -->
         <div id="auth-view" class="view">
-            <h1 class="app-title">CallingApp</h1>
+            <h1 class="app-title">VibeSync</h1>
             <form id="login-form" class="auth-form"><div id="login-error" class="error-message"></div><input type="email" id="login-email" placeholder="Email" required><input type="password" id="login-password" placeholder="Password" required><button type="submit">Log In</button><p class="form-switch-text">Don't have an account? <a id="show-signup">Sign up</a></p></form>
             <form id="signup-form" class="auth-form" style="display: none;"><div id="signup-error" class="error-message"></div><input type="email" id="signup-email" placeholder="Email" required><input type="password" id="signup-password" placeholder="Password" required><button type="submit">Sign Up</button><p class="form-switch-text">Already have an account? <a id="show-login">Log in</a></p></form>
         </div>
 
         <!-- Main App View -->
         <div id="main-view" class="view">
-            <header class="main-header"><div class="header-top"><span class="header-title">CallingApp</span><div class="header-actions"><button id="add-friend-btn" class="icon-btn" title="Add Friend"><svg viewBox="0 0 24 24"><path d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path></svg></button><button id="menu-btn" class="icon-btn" title="Profile & Settings"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"></path></svg></button></div></div><nav class="header-nav"><button id="nav-home" class="nav-tab active">Chats <span id="home-badge" class="badge"></span></button><button id="nav-notifications" class="nav-tab">Updates <span id="notifications-badge" class="badge"></span></button><button id="nav-calls" class="nav-tab">Calls</button></nav></header>
+            <header class="main-header"><div class="header-top"><span class="header-title">VibeSync</span><div class="header-actions"><button id="add-friend-btn" class="icon-btn" title="Add Friend"><svg viewBox="0 0 24 24"><path d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path></svg></button><button id="menu-btn" class="icon-btn" title="Profile & Settings"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"></path></svg></button></div></div><nav class="header-nav"><button id="nav-home" class="nav-tab active">Chats <span id="home-badge" class="badge"></span></button><button id="nav-notifications" class="nav-tab">Updates <span id="notifications-badge" class="badge"></span></button><button id="nav-calls" class="nav-tab">Calls</button></nav></header>
             <main id="main-content"><div id="home-content" class="content-panel active"><div id="contact-list"></div></div><div id="notifications-content" class="content-panel"><div id="notification-list"></div></div><div id="calls-content" class="content-panel"><div id="call-log-list"></div></div></main>
         </div>
         
         <!-- Chat View -->
         <div id="chat-view" class="view">
-            <header class="chat-header"><button id="back-to-main-btn" class="icon-btn"><svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path></svg></button><div id="chat-header-emoji" class="list-item-emoji"></div><div id="chat-header-info"><span id="chat-header-name"></span></div><div class="chat-header-actions"><button id="music-search-btn" class="icon-btn" title="Search Music"><svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"></path></svg></button><button id="voice-call-btn" class="icon-btn" title="Voice Call"><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"></path></svg></button><button id="video-call-btn" class="icon-btn" title="Video Call"><svg viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"></path></svg></button><button id="chat-more-btn" class="icon-btn" title="More options"><svg viewBox="0 0 24 24"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"></path></svg></button></div></header>
+            <header class="chat-header"><button id="back-to-main-btn" class="icon-btn"><svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path></svg></button><div id="chat-header-emoji" class="list-item-emoji"></div><div id="chat-header-info"><span id="chat-header-name"></span></div><div class="chat-header-actions"><button id="movie-search-btn" class="icon-btn" title="Watch Video Together"><svg viewBox="0 0 24 24"><path d="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5v2h8v-2h5c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 14H3V5h18v12zM9 10.5l6 4.5-6 4.5v-9z"></path></svg></button><button id="music-search-btn" class="icon-btn" title="Listen to Music"><svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"></path></svg></button><button id="voice-call-btn" class="icon-btn" title="Voice Call"><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"></path></svg></button><button id="video-call-btn" class="icon-btn" title="Video Call"><svg viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"></path></svg></button><button id="chat-more-btn" class="icon-btn" title="More options"><svg viewBox="0 0 24 24"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"></path></svg></button></div></header>
             <div id="chat-messages"></div>
             <div id="music-player-bar"><div id="music-controls-wrapper"><div id="music-main-controls"><div id="music-info-wrapper"><div id="music-info"><img id="music-thumbnail" src="" alt="thumbnail"><span id="music-title"></span></div></div><div id="music-controls"><button id="music-play-pause-btn"><svg id="play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg><svg id="pause-icon" style="display:none;" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"></path></svg></button></div><button id="music-remove-btn" title="Remove song"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg></button></div><div id="music-progress-container"><div id="music-progress-bar"></div></div></div></div>
             <div id="chat-input-container"><input type="text" id="chat-input" placeholder="Message"><button id="chat-send-btn"><svg viewBox="0 0 24 24" fill="white"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path></svg></button></div>
         </div>
         
-        <!-- Call Overlays (on top of Chat View) -->
-        <div id="video-call-view" class="view call-view"><video id="remote-video" autoplay playsinline></video><canvas id="local-video-canvas"></canvas><div class="call-overlay"><div id="video-caller-info" class="caller-info"><div class="emoji"></div><div class="name"></div><div class="status"></div></div><div class="call-controls"><button id="end-video-call-btn" class="end-call-btn"><svg fill="white" viewBox="0 0 24 24" width="36" height="36"><path d="M12 9c-1.6 0-3.15.25-4.63.72L12 14.29l4.63-4.57A9.94 9.94 0 0 0 12 9zm7.36-1.56a14.33 14.33 0 0 1-1.39 1.39L12 14.77l-5.97-5.94a14.33 14.33 0 0 1-1.39-1.39A10.05 10.05 0 0 1 12 7c2.18 0 4.23.7 5.95 1.88l-1.42 1.42C15.4 9.56 13.77 9 12 9c-1.6 0-3.15.25-4.63.72L12 14.29l7.36-7.29zM3.41 1.86L2 3.27l2.91 2.91A14.2 14.2 0 0 0 3.04 7.64L4.4 6.28a12.18 12.18 0 0 1 1.36-1.12L2.01 1.41z"></path></svg></button></div><button id="filters-btn" class="icon-btn" title="Filters"><svg viewBox="0 0 24 24"><path d="M12 22C6.49 22 2 17.51 2 12S6.49 2 12 2s10 4.49 10 10-4.51 10-10 10zm0-18c-4.41 0-8 3.59-8 8s3.59 8 8 8 8-3.59 8-8-3.59-8-8-8zm-5 8c0-2.76 2.24-5 5-5 .55 0 1 .45 1 1s-.45 1-1 1c-1.65 0-3 1.35-3 3 0 .55-.45 1-1 1s-1-.45-1-1zm9.42-3.42c-.39-.39-1.02-.39-1.41 0L12 11.59l-2.01-2.01c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41L10.59 13l-2.01 2.01c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0L12 14.41l2.01 2.01c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L13.41 13l2.01-2.01c.39-.39.39-1.03 0-1.42z"></path></svg></button><div id="filter-options" style="display:none;"><button data-filter="none">None</button><button data-filter="filter-smooth" class="active">Smooth Skin</button><button data-filter="filter-vivid">Vivid Color</button></div></div></div>
+        <!-- Video Watch View -->
+        <div id="video-watch-view" class="view">
+            <div id="video-watch-player-container">
+                <div id="video-watch-player"></div>
+            </div>
+            <div class="video-watch-overlay">
+                <div class="video-watch-header">
+                    <h3 id="video-watch-title"></h3>
+                    <div>
+                        <button id="fullscreen-btn" class="icon-btn" title="Fullscreen"><svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"></path></svg></button>
+                        <button id="close-watch-view-btn" class="icon-btn" title="Close"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg></button>
+                    </div>
+                </div>
+                <div id="reaction-bar">
+                    <button>👍</button><button>😂</button><button>❤️</button><button>😮</button><button>😢</button>
+                </div>
+            </div>
+            <div id="reaction-container"></div>
+        </div>
+
+        <!-- Call Views -->
+        <div id="video-call-view" class="view call-view"><video id="remote-video" autoplay playsinline></video><canvas id="local-video-canvas"></canvas><div class="call-overlay"><div id="video-caller-info" class="caller-info"><div class="emoji"></div><div class="name"></div><div class="status"></div></div><div class="call-controls"><button id="end-video-call-btn" class="end-call-btn"><svg fill="white" viewBox="0 0 24 24" width="36" height="36"><path d="M12 9c-1.6 0-3.15.25-4.63.72L12 14.29l4.63-4.57A9.94 9.94 0 0 0 12 9zm7.36-1.56a14.33 14.33 0 0 1-1.39 1.39L12 14.77l-5.97-5.94a14.33 14.33 0 0 1-1.39-1.39A10.05 10.05 0 0 1 12 7c2.18 0 4.23.7 5.95 1.88l-1.42 1.42C15.4 9.56 13.77 9 12 9c-1.6 0-3.15.25-4.63.72L12 14.29l7.36-7.29zM3.41 1.86L2 3.27l2.91 2.91A14.2 14.2 0 0 0 3.04 7.64L4.4 6.28a12.18 12.18 0 0 1 1.36-1.12L2.01 1.41z"></path></svg></button></div></div></div>
         <div id="voice-call-view" class="view call-view"><audio id="remote-audio" autoplay playsinline></audio><div class="call-overlay"><div id="voice-caller-info" class="caller-info"><div class="emoji"></div><div class="name"></div><div class="status"></div></div><div class="call-controls"><button id="end-voice-call-btn" class="end-call-btn"><svg fill="white" viewBox="0 0 24 24" width="36" height="36"><path d="M12 9c-1.6 0-3.15.25-4.63.72L12 14.29l4.63-4.57A9.94 9.94 0 0 0 12 9zm7.36-1.56a14.33 14.33 0 0 1-1.39 1.39L12 14.77l-5.97-5.94a14.33 14.33 0 0 1-1.39-1.39A10.05 10.05 0 0 1 12 7c2.18 0 4.23.7 5.95 1.88l-1.42 1.42C15.4 9.56 13.77 9 12 9c-1.6 0-3.15.25-4.63.72L12 14.29l7.36-7.29zM3.41 1.86L2 3.27l2.91 2.91A14.2 14.2 0 0 0 3.04 7.64L4.4 6.28a12.18 12.18 0 0 1 1.36-1.12L2.01 1.41z"></path></svg></button></div></div></div>
 
         <!-- Modals -->
         <div id="profile-setup-modal" class="modal"><div class="modal-content"><h2>Set up your Profile</h2><input type="text" id="profile-name-input" placeholder="Your Name" required><input type="text" id="profile-emoji-input" placeholder="Emoji (e.g., 😊)" maxlength="2" required><button id="save-profile-btn">Save Profile</button></div></div>
-        <div id="add-friend-modal" class="modal"><div class="modal-content"><h2>Add Friend</h2><p>Enter your friend's CallingApp ID</p><input type="text" id="add-friend-id-input" placeholder="eg: Abhi31"><div class="modal-actions"><button id="close-add-friend-modal-btn" class="secondary">Cancel</button><button id="send-friend-request-btn">Send Request</button></div></div></div>
+        <div id="add-friend-modal" class="modal"><div class="modal-content"><h2>Add Friend</h2><p>Enter your friend's VibeSync ID</p><input type="text" id="add-friend-id-input" placeholder="eg: Abhi31"><div class="modal-actions"><button id="close-add-friend-modal-btn" class="secondary">Cancel</button><button id="send-friend-request-btn">Send Request</button></div></div></div>
         <div id="profile-view-modal" class="modal"><div class="modal-content"><h2>Your Profile</h2><div id="profile-info-display"></div><div id="profile-edit-form" style="display:none;"><input type="text" id="edit-profile-name"><input type="text" id="edit-profile-emoji" maxlength="2"></div><div class="modal-actions"><button id="edit-profile-btn">Edit</button><button id="save-profile-changes-btn" style="display:none;">Save</button></div><div id="blocked-users-section"><h3>Blocked Users</h3><div id="blocked-users-list" style="max-height: 120px; overflow-y: auto;"></div></div><button id="logout-btn" style="margin-top: 15px; background-color: #d93025;">Logout</button><button id="close-profile-modal-btn" class="secondary">Close</button></div></div>
         <div id="incoming-call-modal" class="modal"><div class="modal-content"><h2>Incoming Call</h2><div id="incoming-caller-info" class="caller-info"><div class="emoji"></div><div class="name"></div></div><div class="modal-actions" style="justify-content:space-around; padding: 10px 0;"><button id="reject-call-btn" class="end-call-btn">Reject</button><button id="accept-call-btn" class="accept-call-btn">Accept</button></div></div></div>
-        <div id="music-search-modal" class="modal"><div class="modal-content"><h2>Search Music</h2><input type="text" id="music-search-input" placeholder="Search for a song..."><div id="music-search-results"></div><div class="modal-actions"><button id="close-music-search-modal-btn" class="secondary">Close</button></div></div></div>
+        <div id="search-modal" class="modal"><div class="modal-content"><h2>Search</h2><input type="text" id="search-input" placeholder="Search for..."><div id="search-results"></div><div class="modal-actions"><button id="close-search-modal-btn" class="secondary">Close</button></div></div></div>
         <div id="confirm-modal" class="modal"><div class="modal-content"><h2 id="confirm-modal-title">Are you sure?</h2><p id="confirm-modal-message" style="text-align: center; color: var(--wa-text-secondary);"></p><div class="modal-actions" style="justify-content: center;"><button id="confirm-modal-cancel-btn" class="secondary">Cancel</button><button id="confirm-modal-confirm-btn" style="background-color: #d93025;">Confirm</button></div></div></div>
     </div>
     
     <audio id="ringtone" loop><source src="data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA" type="audio/wav"></audio>
-    <div id="player-container" style="position: fixed; top: -9999px; left: -9999px;"></div>
+    <div id="music-player-container" style="position: fixed; top: -9999px; left: -9999px;"></div>
     <video id="local-video-hidden" autoplay playsinline muted style="display:none;"></video>
 
     <script src="https://www.youtube.com/iframe_api"></script>
@@ -183,27 +214,18 @@
         let currentUser = null, currentChatPartner = null, currentCallData = null, currentChatId = null;
         let peerConnection, localStream, remoteStream;
         const stunServers = { iceServers: [ { urls: 'stun:stun.l.google.com:19302' }, { urls: 'stun:stun1.l.google.com:19302' } ] };
-        let ytPlayer, musicUpdateInterval, isSeeking = false;
+        let musicPlayer, videoWatchPlayer, musicUpdateInterval;
         let localVideoCanvas, canvasCtx, localVideoHidden, animationFrameId, canvasStream;
+        let searchType = 'music'; // 'music' or 'movie'
 
         // --- UI ELEMENT SELECTORS ---
         const allViews = document.querySelectorAll('.view');
-        const allContentPanels = document.querySelectorAll('.content-panel');
         const ringtone = document.getElementById('ringtone');
 
         // --- UTILITY & SETUP ---
         const showView = (viewId) => { allViews.forEach(v => v.style.display = 'none'); document.getElementById(viewId).style.display = 'flex'; };
         const showModal = (modalId, show = true) => { document.getElementById(modalId).style.display = show ? 'flex' : 'none'; };
-        const showPanel = (panelId) => {
-            allContentPanels.forEach(p => p.classList.remove('active'));
-            document.getElementById(panelId).classList.add('active');
-            document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
-            if(panelId === 'home-content') document.getElementById('nav-home').classList.add('active');
-            if(panelId === 'notifications-content') document.getElementById('nav-notifications').classList.add('active');
-            if(panelId === 'calls-content') document.getElementById('nav-calls').classList.add('active');
-        };
         const getChatId = (uid1, uid2) => [uid1, uid2].sort().join('_');
-        
         async function createUniqueUserId(name) {
             const baseId = name.replace(/[^a-zA-Z0-9]/g, '') || 'user';
             let finalId = ''; let isUnique = false;
@@ -212,10 +234,8 @@
                 finalId = baseId + randomNumber;
                 const snapshot = await db.ref('users').orderByChild('jgId').equalTo(finalId).once('value');
                 if (!snapshot.exists()) { isUnique = true; }
-            }
-            return finalId;
+            } return finalId;
         }
-        
         function showConfirmModal(message, onConfirm) {
             document.getElementById('confirm-modal-message').textContent = message;
             const confirmBtn = document.getElementById('confirm-modal-confirm-btn');
@@ -226,43 +246,18 @@
             showModal('confirm-modal', true);
         }
 
-        // --- AUTHENTICATION ---
-        auth.onAuthStateChanged(async (user) => {
-            if (user) {
-                db.ref(`users/${user.uid}`).on('value', (snapshot) => {
-                    if (snapshot.exists()) {
-                        const wasNull = currentUser === null;
-                        currentUser = { uid: user.uid, ...snapshot.val() };
-                        if(wasNull) initializeApp();
-                        showView('main-view');
-                    } else { showModal('profile-setup-modal'); }
-                });
-            } else { currentUser = null; showView('auth-view'); }
-        });
+        // --- AUTHENTICATION & PROFILE ---
+        auth.onAuthStateChanged(async (user) => { if (user) { db.ref(`users/${user.uid}`).on('value', (snapshot) => { if (snapshot.exists()) { const wasNull = currentUser === null; currentUser = { uid: user.uid, ...snapshot.val() }; if(wasNull) initializeApp(); showView('main-view'); } else { showModal('profile-setup-modal'); } }); } else { currentUser = null; showView('auth-view'); } });
         document.getElementById('login-form').addEventListener('submit', (e) => { e.preventDefault(); auth.signInWithEmailAndPassword(document.getElementById('login-email').value, document.getElementById('login-password').value).catch(error => document.getElementById('login-error').textContent = error.message); });
         document.getElementById('signup-form').addEventListener('submit', (e) => { e.preventDefault(); auth.createUserWithEmailAndPassword(document.getElementById('signup-email').value, document.getElementById('signup-password').value).then(userCredential => { currentUser = { uid: userCredential.user.uid, email: userCredential.user.email }; showModal('profile-setup-modal'); }).catch(error => document.getElementById('signup-error').textContent = error.message); });
         document.getElementById('logout-btn').addEventListener('click', () => { auth.signOut(); showModal('profile-view-modal', false); });
         document.getElementById('show-signup').addEventListener('click', () => { document.getElementById('login-form').style.display = 'none'; document.getElementById('signup-form').style.display = 'flex'; });
         document.getElementById('show-login').addEventListener('click', () => { document.getElementById('signup-form').style.display = 'none'; document.getElementById('login-form').style.display = 'flex'; });
+        document.getElementById('save-profile-btn').addEventListener('click', async () => { const name = document.getElementById('profile-name-input').value.trim(); const emoji = document.getElementById('profile-emoji-input').value.trim(); if (!name || !emoji) return alert('Name and Emoji are required.'); const jgId = await createUniqueUserId(name); const profileData = { name, emoji, jgId, email: currentUser.email, contacts: {}, blocked: {} }; db.ref(`users/${currentUser.uid}`).set(profileData).then(() => showModal('profile-setup-modal', false)); });
+        function initializeApp() { listenForContacts(); listenForFriendRequests(); listenForIncomingCalls(); listenForUnreadMessages(); renderCallLogs(); localVideoCanvas = document.getElementById('local-video-canvas'); canvasCtx = localVideoCanvas.getContext('2d'); localVideoHidden = document.getElementById('local-video-hidden'); }
 
-        // --- PROFILE MANAGEMENT ---
-        document.getElementById('save-profile-btn').addEventListener('click', async () => {
-            const name = document.getElementById('profile-name-input').value.trim();
-            const emoji = document.getElementById('profile-emoji-input').value.trim();
-            if (!name || !emoji) return alert('Name and Emoji are required.');
-            const jgId = await createUniqueUserId(name);
-            const profileData = { name, emoji, jgId, email: currentUser.email, contacts: {}, blocked: {} };
-            db.ref(`users/${currentUser.uid}`).set(profileData).then(() => showModal('profile-setup-modal', false));
-        });
-        
-        function initializeApp() {
-            listenForContacts(); listenForFriendRequests(); listenForIncomingCalls(); listenForUnreadMessages(); renderCallLogs();
-            localVideoCanvas = document.getElementById('local-video-canvas');
-            canvasCtx = localVideoCanvas.getContext('2d');
-            localVideoHidden = document.getElementById('local-video-hidden');
-        }
-
-        // --- NAVIGATION & CHAT ---
+        // --- NAVIGATION & CHAT LIFECYCLE ---
+        function showPanel(panelId) { document.querySelectorAll('.content-panel').forEach(p => p.classList.remove('active')); document.getElementById(panelId).classList.add('active'); document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active')); if(panelId === 'home-content') document.getElementById('nav-home').classList.add('active'); if(panelId === 'notifications-content') document.getElementById('nav-notifications').classList.add('active'); if(panelId === 'calls-content') document.getElementById('nav-calls').classList.add('active'); }
         document.getElementById('nav-home').addEventListener('click', () => showPanel('home-content'));
         document.getElementById('nav-notifications').addEventListener('click', () => showPanel('notifications-content'));
         document.getElementById('nav-calls').addEventListener('click', () => showPanel('calls-content'));
@@ -272,8 +267,12 @@
         document.getElementById('back-to-main-btn').addEventListener('click', () => {
             showView('main-view');
             if (window.currentChatListener) db.ref(window.currentChatListener.path).off('child_added', window.currentChatListener.callback);
-            if (currentChatId) db.ref(`musicState/${currentChatId}`).off('value');
-            if (ytPlayer && typeof ytPlayer.stopVideo === 'function') ytPlayer.stopVideo();
+            if (currentChatId) {
+                db.ref(`musicState/${currentChatId}`).off();
+                db.ref(`videoState/${currentChatId}`).off();
+                db.ref(`reactions/${currentChatId}`).off();
+            }
+            if (musicPlayer && typeof musicPlayer.stopVideo === 'function') musicPlayer.stopVideo();
             document.getElementById('music-player-bar').style.display = 'none';
             clearInterval(musicUpdateInterval);
             currentChatPartner = null; currentChatId = null;
@@ -289,225 +288,72 @@
             db.ref(`unreadCounts/${currentUser.uid}/${currentChatId}`).set(0);
 
             const messagesRef = db.ref(`messages/${currentChatId}`).limitToLast(50);
-            window.currentChatListener = { path: `messages/${currentChatId}`, callback: messagesRef.on('child_added', snapshot => {
-                const msg = snapshot.val(); const div = document.createElement('div');
-                div.textContent = msg.text; div.className = 'message-bubble ' + (msg.sender === currentUser.uid ? 'message-sent' : 'message-received');
-                const chatMessages = document.getElementById('chat-messages');
-                chatMessages.appendChild(div); chatMessages.scrollTop = chatMessages.scrollHeight;
-            })};
+            window.currentChatListener = { path: `messages/${currentChatId}`, callback: messagesRef.on('child_added', snapshot => { const msg = snapshot.val(); const div = document.createElement('div'); div.textContent = msg.text; div.className = 'message-bubble ' + (msg.sender === currentUser.uid ? 'message-sent' : 'message-received'); const chatMessages = document.getElementById('chat-messages'); chatMessages.appendChild(div); chatMessages.scrollTop = chatMessages.scrollHeight; })};
+            
             initMusicSync(currentChatId);
+            initVideoWatchSync(currentChatId);
+            listenForReactions(currentChatId);
             showView('chat-view');
         }
 
-        // --- FRIEND SYSTEM (Unchanged and correct) ---
-        document.getElementById('send-friend-request-btn').addEventListener('click', () => {
-            const friendId = document.getElementById('add-friend-id-input').value.trim(); if (!friendId) return;
-            db.ref('users').orderByChild('jgId').equalTo(friendId).once('value', snapshot => {
-                if (snapshot.exists()) {
-                    const friendUid = Object.keys(snapshot.val())[0];
-                    if(friendUid === currentUser.uid) return alert("You can't add yourself.");
-                    const request = { name: currentUser.name, emoji: currentUser.emoji, type: 'incoming' };
-                    db.ref(`requests/${friendUid}/${currentUser.uid}`).set(request).then(() => { 
-                        alert('Friend request sent!'); showModal('add-friend-modal', false); document.getElementById('add-friend-id-input').value = '';
-                    });
-                } else { alert('User not found.'); }
-            });
-        });
-        function listenForFriendRequests() {
-            db.ref(`requests/${currentUser.uid}`).on('value', snapshot => {
-                const list = document.getElementById('notification-list'); list.innerHTML = ''; let incomingRequestCount = 0;
-                if (snapshot.exists()) {
-                    snapshot.forEach(childSnapshot => {
-                        const request = childSnapshot.val(); const fromUid = childSnapshot.key;
-                        if (currentUser.blocked && currentUser.blocked[fromUid]) return;
-                        const div = document.createElement('div'); div.className = 'list-item'; div.style.cursor = 'default';
-                        const type = request.type || 'incoming';
-                        switch (type) {
-                            case 'incoming':
-                                incomingRequestCount++;
-                                div.innerHTML = `<div class="list-item-emoji">${request.emoji}</div><div class="list-item-details"><div class="list-item-name">${request.name}</div><div class="list-item-subtext">Wants to be your friend</div></div><div class="list-item-actions"><button onclick="handleFriendRequest('${fromUid}', true)">Accept</button><button class="reject" onclick="handleFriendRequest('${fromUid}', false)">Reject</button></div>`;
-                                break;
-                            case 'accepted':
-                                div.innerHTML = `<div class="list-item-emoji">${request.emoji}</div><div class="list-item-details"><div class="list-item-name">${request.name}</div><div class="list-item-subtext">Accepted your friend request.</div></div><div class="list-item-actions"><button class="reject" onclick="dismissNotification('${fromUid}')">Dismiss</button></div>`;
-                                break;
-                            case 'rejected':
-                                div.innerHTML = `<div class="list-item-emoji">${request.emoji}</div><div class="list-item-details"><div class="list-item-name">${request.name}</div><div class="list-item-subtext">Declined your friend request.</div></div><div class="list-item-actions"><button class="reject" onclick="dismissNotification('${fromUid}')">Dismiss</button></div>`;
-                                break;
-                        }
-                        if (div.innerHTML) list.appendChild(div);
-                    });
-                }
-                if (list.childElementCount === 0) list.innerHTML = '<p style="text-align:center; color: #667781; padding: 40px 20px;">No new updates.</p>';
-                const badge = document.getElementById('notifications-badge'); badge.textContent = incomingRequestCount; badge.style.display = incomingRequestCount > 0 ? 'block' : 'none';
-            });
-        }
+        // --- FRIEND SYSTEM --- (Unchanged)
+        document.getElementById('send-friend-request-btn').addEventListener('click', () => { const friendId = document.getElementById('add-friend-id-input').value.trim(); if (!friendId) return; db.ref('users').orderByChild('jgId').equalTo(friendId).once('value', snapshot => { if (snapshot.exists()) { const friendUid = Object.keys(snapshot.val())[0]; if(friendUid === currentUser.uid) return alert("You can't add yourself."); const request = { name: currentUser.name, emoji: currentUser.emoji, type: 'incoming' }; db.ref(`requests/${friendUid}/${currentUser.uid}`).set(request).then(() => { alert('Friend request sent!'); showModal('add-friend-modal', false); document.getElementById('add-friend-id-input').value = ''; }); } else { alert('User not found.'); } }); });
+        function listenForFriendRequests() { db.ref(`requests/${currentUser.uid}`).on('value', snapshot => { const list = document.getElementById('notification-list'); list.innerHTML = ''; let incomingRequestCount = 0; if (snapshot.exists()) { snapshot.forEach(childSnapshot => { const request = childSnapshot.val(); const fromUid = childSnapshot.key; if (currentUser.blocked && currentUser.blocked[fromUid]) return; const div = document.createElement('div'); div.className = 'list-item'; div.style.cursor = 'default'; const type = request.type || 'incoming'; switch (type) { case 'incoming': incomingRequestCount++; div.innerHTML = `<div class="list-item-emoji">${request.emoji}</div><div class="list-item-details"><div class="list-item-name">${request.name}</div><div class="list-item-subtext">Wants to be your friend</div></div><div class="list-item-actions"><button onclick="handleFriendRequest('${fromUid}', true)">Accept</button><button class="reject" onclick="handleFriendRequest('${fromUid}', false)">Reject</button></div>`; break; case 'accepted': div.innerHTML = `<div class="list-item-emoji">${request.emoji}</div><div class="list-item-details"><div class="list-item-name">${request.name}</div><div class="list-item-subtext">Accepted your friend request.</div></div><div class="list-item-actions"><button class="reject" onclick="dismissNotification('${fromUid}')">Dismiss</button></div>`; break; case 'rejected': div.innerHTML = `<div class="list-item-emoji">${request.emoji}</div><div class="list-item-details"><div class="list-item-name">${request.name}</div><div class="list-item-subtext">Declined your friend request.</div></div><div class="list-item-actions"><button class="reject" onclick="dismissNotification('${fromUid}')">Dismiss</button></div>`; break; } if (div.innerHTML) list.appendChild(div); }); } if (list.childElementCount === 0) list.innerHTML = '<p style="text-align:center; color: #667781; padding: 40px 20px;">No new updates.</p>'; const badge = document.getElementById('notifications-badge'); badge.textContent = incomingRequestCount; badge.style.display = incomingRequestCount > 0 ? 'block' : 'none'; }); }
         window.dismissNotification = (notificationId) => { db.ref(`requests/${currentUser.uid}/${notificationId}`).remove(); };
-        window.handleFriendRequest = (fromUid, accepted) => {
-            db.ref(`requests/${currentUser.uid}/${fromUid}`).remove();
-            const notification = { name: currentUser.name, emoji: currentUser.emoji, type: accepted ? 'accepted' : 'rejected' };
-            db.ref(`requests/${fromUid}/${currentUser.uid}`).set(notification);
-            if (accepted) { db.ref(`users/${currentUser.uid}/contacts/${fromUid}`).set(true); db.ref(`users/${fromUid}/contacts/${currentUser.uid}`).set(true); }
-        }
-        function listenForContacts() {
-            db.ref(`users/${currentUser.uid}/contacts`).on('value', snapshot => {
-                const list = document.getElementById('contact-list'); list.innerHTML = '';
-                if(snapshot.exists()){
-                    snapshot.forEach(childSnapshot => {
-                        db.ref(`users/${childSnapshot.key}`).once('value', userSnap => {
-                            const contact = userSnap.val(); if(!contact) return; const div = document.createElement('div');
-                            div.className = 'list-item'; div.onclick = () => openChat(childSnapshot.key, contact);
-                            div.innerHTML = `<div class="list-item-emoji">${contact.emoji}</div><div class="list-item-details"><div class="list-item-name">${contact.name}</div><div class="list-item-subtext" id="unread-count-${getChatId(currentUser.uid, childSnapshot.key)}">Click to open chat</div></div>`;
-                            list.appendChild(div);
-                        });
-                    });
-                } else { list.innerHTML = '<p style="text-align:center; color: #667781; padding: 40px 20px;">Add friends to start chatting!</p>'; }
-            });
-        }
-        // --- MESSAGING & UNREAD (Unchanged and correct) ---
+        window.handleFriendRequest = (fromUid, accepted) => { db.ref(`requests/${currentUser.uid}/${fromUid}`).remove(); const notification = { name: currentUser.name, emoji: currentUser.emoji, type: accepted ? 'accepted' : 'rejected' }; db.ref(`requests/${fromUid}/${currentUser.uid}`).set(notification); if (accepted) { db.ref(`users/${currentUser.uid}/contacts/${fromUid}`).set(true); db.ref(`users/${fromUid}/contacts/${currentUser.uid}`).set(true); } }
+        function listenForContacts() { db.ref(`users/${currentUser.uid}/contacts`).on('value', snapshot => { const list = document.getElementById('contact-list'); list.innerHTML = ''; if(snapshot.exists()){ snapshot.forEach(childSnapshot => { db.ref(`users/${childSnapshot.key}`).once('value', userSnap => { const contact = userSnap.val(); if(!contact) return; const div = document.createElement('div'); div.className = 'list-item'; div.onclick = () => openChat(childSnapshot.key, contact); div.innerHTML = `<div class="list-item-emoji">${contact.emoji}</div><div class="list-item-details"><div class="list-item-name">${contact.name}</div><div class="list-item-subtext" id="unread-count-${getChatId(currentUser.uid, childSnapshot.key)}">Click to open chat</div></div>`; list.appendChild(div); }); }); } else { list.innerHTML = '<p style="text-align:center; color: #667781; padding: 40px 20px;">Add friends to start chatting!</p>'; } }); }
+        
+        // --- MESSAGING & UNREAD --- (Unchanged)
         document.getElementById('chat-send-btn').addEventListener('click', sendMessage);
         document.getElementById('chat-input').addEventListener('keypress', (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); } });
-        function sendMessage() {
-            const input = document.getElementById('chat-input'); const text = input.value.trim(); if (!text || !currentChatPartner) return;
-            if (currentChatPartner.blocked && currentChatPartner.blocked[currentUser.uid]) return alert("You have been blocked by this user.");
-            const chatId = getChatId(currentUser.uid, currentChatPartner.uid);
-            db.ref(`messages/${chatId}`).push({ text: text, sender: currentUser.uid, timestamp: firebase.database.ServerValue.TIMESTAMP });
-            db.ref(`unreadCounts/${currentChatPartner.uid}/${chatId}`).transaction(count => (count || 0) + 1); input.value = '';
-        }
-        function listenForUnreadMessages() {
-            db.ref(`unreadCounts/${currentUser.uid}`).on('value', snapshot => {
-                let totalUnread = 0;
-                snapshot.forEach(chatSnap => {
-                    const count = chatSnap.val(); totalUnread += count;
-                    const unreadElem = document.getElementById(`unread-count-${chatSnap.key}`);
-                    if (unreadElem) unreadElem.textContent = count > 0 ? `${count} new message${count > 1 ? 's' : ''}` : 'Click to open chat';
-                });
-                const badge = document.getElementById('home-badge'); badge.textContent = totalUnread; badge.style.display = totalUnread > 0 ? 'block' : 'none';
-            });
-        }
+        function sendMessage() { const input = document.getElementById('chat-input'); const text = input.value.trim(); if (!text || !currentChatPartner) return; if (currentChatPartner.blocked && currentChatPartner.blocked[currentUser.uid]) return alert("You have been blocked by this user."); const chatId = getChatId(currentUser.uid, currentChatPartner.uid); db.ref(`messages/${chatId}`).push({ text: text, sender: currentUser.uid, timestamp: firebase.database.ServerValue.TIMESTAMP }); db.ref(`unreadCounts/${currentChatPartner.uid}/${chatId}`).transaction(count => (count || 0) + 1); input.value = ''; }
+        function listenForUnreadMessages() { db.ref(`unreadCounts/${currentUser.uid}`).on('value', snapshot => { let totalUnread = 0; snapshot.forEach(chatSnap => { const count = chatSnap.val(); totalUnread += count; const unreadElem = document.getElementById(`unread-count-${chatSnap.key}`); if (unreadElem) unreadElem.textContent = count > 0 ? `${count} new message${count > 1 ? 's' : ''}` : 'Click to open chat'; }); const badge = document.getElementById('home-badge'); badge.textContent = totalUnread; badge.style.display = totalUnread > 0 ? 'block' : 'none'; }); }
 
-        // --- WEBRTC CALLING with VIDEO FILTERS ---
+        // --- WEBRTC CALLING with BEAUTY FILTER ---
         document.getElementById('video-call-btn').addEventListener('click', () => startCall(true));
         document.getElementById('voice-call-btn').addEventListener('click', () => startCall(false));
-
         function drawVideoToCanvas() {
             if (localVideoHidden.paused || localVideoHidden.ended) return;
+            canvasCtx.filter = 'brightness(1.05) contrast(1.05) saturate(1.1)'; // Apply beauty filter
             canvasCtx.drawImage(localVideoHidden, 0, 0, localVideoCanvas.width, localVideoCanvas.height);
+            canvasCtx.filter = 'none'; // Reset filter
             animationFrameId = requestAnimationFrame(drawVideoToCanvas);
         }
-
         async function startCall(isVideo) {
             if (!currentChatPartner || (currentUser.blocked && currentUser.blocked[currentChatPartner.uid])) return alert(`You cannot call a blocked user.`);
             currentCallData = { id: db.ref('calls').push().key, isVideo, caller: { uid: currentUser.uid, ...currentUser }, calleeId: currentChatPartner.uid };
             try {
                 localStream = await navigator.mediaDevices.getUserMedia({ video: isVideo, audio: true });
-                
-                if (isVideo) {
-                    localVideoHidden.srcObject = localStream;
-                    localVideoHidden.play();
-                    
-                    // Wait for video to have dimensions to set canvas size
-                    localVideoHidden.onloadedmetadata = () => {
-                         localVideoCanvas.width = localVideoHidden.videoWidth;
-                         localVideoCanvas.height = localVideoHidden.videoHeight;
-                         drawVideoToCanvas();
-                    };
-                    
-                    canvasStream = localVideoCanvas.captureStream();
-                    localStream.getAudioTracks().forEach(track => canvasStream.addTrack(track)); // Add audio to canvas stream
-                }
-
+                if (isVideo) { localVideoHidden.srcObject = localStream; localVideoHidden.play(); localVideoHidden.onloadedmetadata = () => { localVideoCanvas.width = localVideoHidden.videoWidth; localVideoCanvas.height = localVideoHidden.videoHeight; drawVideoToCanvas(); }; canvasStream = localVideoCanvas.captureStream(30); localStream.getAudioTracks().forEach(track => canvasStream.addTrack(track)); }
                 peerConnection = new RTCPeerConnection(stunServers);
                 const streamToSend = isVideo ? canvasStream : localStream;
                 streamToSend.getTracks().forEach(track => peerConnection.addTrack(track, streamToSend));
-
                 peerConnection.onicecandidate = e => { if (e.candidate) db.ref(`iceCandidates/${currentCallData.id}/caller`).push(e.candidate.toJSON()); };
                 peerConnection.ontrack = e => { remoteStream = e.streams[0]; document.getElementById(isVideo ? 'remote-video' : 'remote-audio').srcObject = remoteStream; };
-                
-                const offer = await peerConnection.createOffer();
-                await peerConnection.setLocalDescription(offer);
+                const offer = await peerConnection.createOffer(); await peerConnection.setLocalDescription(offer);
                 await db.ref(`calls/${currentCallData.calleeId}`).set({ ...currentCallData, offer: { type: offer.type, sdp: offer.sdp }});
                 listenForCallAnswer(currentCallData.id); showCallUI(isVideo, 'Calling...');
             } catch (error) { console.error("Error starting call: ", error); alert("Could not start call. Check permissions."); cleanupCall(); }
         }
-        
         document.getElementById('accept-call-btn').addEventListener('click', async () => {
             showModal('incoming-call-modal', false); ringtone.pause(); ringtone.currentTime = 0;
             const { isVideo, id: callId, offer } = currentCallData;
             try {
                 localStream = await navigator.mediaDevices.getUserMedia({ video: isVideo, audio: true });
-
-                if (isVideo) {
-                    localVideoHidden.srcObject = localStream;
-                    localVideoHidden.play();
-                    localVideoHidden.onloadedmetadata = () => {
-                         localVideoCanvas.width = localVideoHidden.videoWidth;
-                         localVideoCanvas.height = localVideoHidden.videoHeight;
-                         drawVideoToCanvas();
-                    };
-                    canvasStream = localVideoCanvas.captureStream();
-                    localStream.getAudioTracks().forEach(track => canvasStream.addTrack(track));
-                }
-
+                if (isVideo) { localVideoHidden.srcObject = localStream; localVideoHidden.play(); localVideoHidden.onloadedmetadata = () => { localVideoCanvas.width = localVideoHidden.videoWidth; localVideoCanvas.height = localVideoHidden.videoHeight; drawVideoToCanvas(); }; canvasStream = localVideoCanvas.captureStream(30); localStream.getAudioTracks().forEach(track => canvasStream.addTrack(track)); }
                 peerConnection = new RTCPeerConnection(stunServers);
                 const streamToSend = isVideo ? canvasStream : localStream;
                 streamToSend.getTracks().forEach(track => peerConnection.addTrack(track, streamToSend));
-
                 peerConnection.onicecandidate = e => { if (e.candidate) db.ref(`iceCandidates/${callId}/callee`).push(e.candidate.toJSON()); };
                 peerConnection.ontrack = e => { remoteStream = e.streams[0]; document.getElementById(isVideo ? 'remote-video' : 'remote-audio').srcObject = remoteStream; };
-                
                 await peerConnection.setRemoteDescription(new RTCSessionDescription(offer));
                 const answer = await peerConnection.createAnswer(); await peerConnection.setLocalDescription(answer);
                 await db.ref(`calls/${currentUser.uid}`).update({ answer: { type: answer.type, sdp: answer.sdp }});
                 listenForRemoteIceCandidates(callId, 'caller'); showCallUI(isVideo, 'Connected');
             } catch(error) { console.error("Error accepting call:", error); alert("Could not accept call."); cleanupCall(); }
         });
-        
-        function showCallUI(isVideo, status) {
-            const viewId = isVideo ? 'video-call-view' : 'voice-call-view';
-            const callView = document.getElementById(viewId);
-            const callerInfo = callView.querySelector('.caller-info');
-            const contact = currentCallData.caller.uid === currentUser.uid ? currentChatPartner : currentCallData.caller;
-            callerInfo.querySelector('.emoji').textContent = contact.emoji;
-            callerInfo.querySelector('.name').textContent = contact.name;
-            callerInfo.querySelector('.status').textContent = status;
-            callView.classList.add('visible');
-        }
-
-        function cleanupCall() {
-            if (peerConnection) { peerConnection.close(); peerConnection = null; }
-            if (localStream) { localStream.getTracks().forEach(track => track.stop()); localStream = null; }
-            cancelAnimationFrame(animationFrameId); // Stop canvas drawing loop
-            canvasCtx.clearRect(0, 0, localVideoCanvas.width, localVideoCanvas.height);
-            
-            document.getElementById('remote-audio').srcObject = null;
-            document.getElementById('remote-video').srcObject = null;
-            document.getElementById('video-call-view').classList.remove('visible');
-            document.getElementById('voice-call-view').classList.remove('visible');
-
-            if (currentCallData) {
-                const otherUserId = currentCallData.caller.uid === currentUser.uid ? currentCallData.calleeId : currentCallData.caller.uid;
-                db.ref(`calls/${otherUserId}`).remove(); db.ref(`calls/${currentUser.uid}`).remove(); db.ref(`iceCandidates/${currentCallData.id}`).remove();
-            }
-            currentCallData = null;
-        }
-
-        document.getElementById('filters-btn').addEventListener('click', (e) => {
-            const options = document.getElementById('filter-options');
-            options.style.display = options.style.display === 'none' ? 'flex' : 'none';
-            e.stopPropagation();
-        });
-        document.getElementById('filter-options').addEventListener('click', (e) => {
-            if(e.target.tagName === 'BUTTON') {
-                const filter = e.target.dataset.filter;
-                localVideoCanvas.className = ''; // Remove all filter classes
-                if(filter !== 'none') localVideoCanvas.classList.add(filter);
-                
-                document.querySelectorAll('#filter-options button').forEach(btn => btn.classList.remove('active'));
-                e.target.classList.add('active');
-            }
-        });
-
-        // --- Unchanged Call Functions ---
+        function showCallUI(isVideo, status) { const viewId = isVideo ? 'video-call-view' : 'voice-call-view'; const callerInfo = document.getElementById(isVideo ? 'video-caller-info' : 'voice-caller-info'); const contact = currentCallData.caller.uid === currentUser.uid ? currentChatPartner : currentCallData.caller; callerInfo.querySelector('.emoji').textContent = contact.emoji; callerInfo.querySelector('.name').textContent = contact.name; callerInfo.querySelector('.status').textContent = status; showView(viewId); }
+        function cleanupCall() { if (peerConnection) { peerConnection.close(); peerConnection = null; } if (localStream) { localStream.getTracks().forEach(track => track.stop()); localStream = null; } cancelAnimationFrame(animationFrameId); canvasCtx.clearRect(0, 0, localVideoCanvas.width, localVideoCanvas.height); document.getElementById('remote-audio').srcObject = null; document.getElementById('remote-video').srcObject = null; if (currentCallData) { const otherUserId = currentCallData.caller.uid === currentUser.uid ? currentCallData.calleeId : currentCallData.caller.uid; db.ref(`calls/${otherUserId}`).remove(); db.ref(`calls/${currentUser.uid}`).remove(); db.ref(`iceCandidates/${currentCallData.id}`).remove(); } currentCallData = null; showView('chat-view'); }
         function listenForCallAnswer(callId) { db.ref(`calls/${currentCallData.calleeId}`).on('value', async snapshot => { const data = snapshot.val(); if (data && data.answer && peerConnection.signalingState !== "stable") { await peerConnection.setRemoteDescription(new RTCSessionDescription(data.answer)); listenForRemoteIceCandidates(callId, 'callee'); updateCallStatus('Connected'); } else if (!data) { endCall(); }}); }
         function listenForIncomingCalls() { db.ref(`calls/${currentUser.uid}`).on('value', async snapshot => { const callData = snapshot.val(); if(callData && !currentCallData) { if (currentUser.blocked && currentUser.blocked[callData.caller.uid]) { db.ref(`calls/${currentUser.uid}`).remove(); return; } currentCallData = callData; document.getElementById('incoming-caller-info').innerHTML = `<div class="emoji">${callData.caller.emoji}</div><div class="name">${callData.caller.name}</div><p style="margin-top: 5px;">Incoming ${callData.isVideo ? 'Video' : 'Voice'} Call</p>`; showModal('incoming-call-modal'); ringtone.play(); } }); }
         document.getElementById('reject-call-btn').addEventListener('click', () => { showModal('incoming-call-modal', false); ringtone.pause(); ringtone.currentTime = 0; db.ref(`calls/${currentUser.uid}`).remove(); logCall('rejected'); currentCallData = null; });
@@ -518,14 +364,8 @@
         function logCall(status) { if (!currentCallData) return; const partner = currentCallData.caller.uid === currentUser.uid ? currentChatPartner : currentCallData.caller; if(!partner) return; db.ref(`callLogs/${currentUser.uid}`).push({ partnerName: partner.name, partnerEmoji: partner.emoji, type: currentCallData.isVideo ? 'video' : 'voice', status, timestamp: firebase.database.ServerValue.TIMESTAMP }); }
         function renderCallLogs() { const list = document.getElementById('call-log-list'); db.ref(`callLogs/${currentUser.uid}`).orderByChild('timestamp').limitToLast(30).on('value', snapshot => { list.innerHTML = ''; if (!snapshot.exists()) { list.innerHTML = '<p style="text-align:center; color: #667781; padding: 40px 20px;">No recent calls.</p>'; return; } const logs = []; snapshot.forEach(child => logs.push(child.val())); logs.reverse().forEach(log => { const div = document.createElement('div'); div.className = 'list-item'; div.innerHTML = `<div class="list-item-emoji">${log.partnerEmoji}</div> <div class="list-item-details"> <div class="list-item-name">${log.partnerName} (${log.type})</div> <div class="list-item-subtext">${log.status} - ${new Date(log.timestamp).toLocaleString()}</div> </div>`; list.appendChild(div); }); }); }
         
-        // --- PROFILE & BLOCKING (with custom confirm) ---
-        function showProfileModal() {
-            document.getElementById('profile-info-display').innerHTML = `<p><strong>Name:</strong> ${currentUser.name}</p><p><strong>Emoji:</strong> ${currentUser.emoji}</p><p><strong>ID:</strong> ${currentUser.jgId}</p>`;
-            document.getElementById('edit-profile-name').value = currentUser.name; document.getElementById('edit-profile-emoji').value = currentUser.emoji;
-            document.getElementById('profile-info-display').style.display = 'block'; document.getElementById('profile-edit-form').style.display = 'none';
-            document.getElementById('edit-profile-btn').style.display = 'inline-block'; document.getElementById('save-profile-changes-btn').style.display = 'none';
-            renderBlockedUsers(); showModal('profile-view-modal');
-        }
+        // --- PROFILE & BLOCKING ---
+        function showProfileModal() { document.getElementById('profile-info-display').innerHTML = `<p><strong>Name:</strong> ${currentUser.name}</p><p><strong>Emoji:</strong> ${currentUser.emoji}</p><p><strong>ID:</strong> ${currentUser.jgId}</p>`; document.getElementById('edit-profile-name').value = currentUser.name; document.getElementById('edit-profile-emoji').value = currentUser.emoji; document.getElementById('profile-info-display').style.display = 'block'; document.getElementById('profile-edit-form').style.display = 'none'; document.getElementById('edit-profile-btn').style.display = 'inline-block'; document.getElementById('save-profile-changes-btn').style.display = 'none'; renderBlockedUsers(); showModal('profile-view-modal'); }
         document.getElementById('close-profile-modal-btn').addEventListener('click', () => showModal('profile-view-modal', false));
         document.getElementById('edit-profile-btn').addEventListener('click', () => { document.getElementById('profile-info-display').style.display = 'none'; document.getElementById('profile-edit-form').style.display = 'block'; document.getElementById('edit-profile-btn').style.display = 'none'; document.getElementById('save-profile-changes-btn').style.display = 'inline-block'; });
         document.getElementById('save-profile-changes-btn').addEventListener('click', () => { db.ref(`users/${currentUser.uid}`).update({ name: document.getElementById('edit-profile-name').value, emoji: document.getElementById('edit-profile-emoji').value }); showProfileModal(); });
@@ -534,50 +374,128 @@
         window.unblockUser = (uidToUnblock) => { db.ref(`users/${currentUser.uid}/blocked/${uidToUnblock}`).remove().then(() => { alert('User unblocked.'); renderBlockedUsers(); }); }
         function renderBlockedUsers() { const list = document.getElementById('blocked-users-list'); list.innerHTML = ''; db.ref(`users/${currentUser.uid}/blocked`).once('value', snapshot => { if (!snapshot.exists()) { list.innerHTML = '<p style="font-size:12px; text-align:center; color: #667781;">No users blocked.</p>'; return; } snapshot.forEach(childSnapshot => { db.ref(`users/${childSnapshot.key}`).once('value', userSnap => { if (userSnap.exists()) { const user = userSnap.val(); const item = document.createElement('div'); item.className = 'list-item'; item.innerHTML = `<div class="list-item-emoji" style="font-size: 24px;">${user.emoji}</div><div class="list-item-details"><div class="list-item-name">${user.name}</div></div><div class="list-item-actions"><button onclick="unblockUser('${childSnapshot.key}')">Unblock</button></div>`; list.appendChild(item); } }); }); }); }
         
-        // --- MUSIC SYNC & SEARCH ---
+        // --- YOUTUBE PLAYER SETUP ---
         const YOUTUBE_API_KEY = "AIzaSyA6qNE-wCpW1oAkH7mPyVkezmbHrK8QXN8";
-        function onYouTubeIframeAPIReady() { ytPlayer = new YT.Player('player-container', { height: '100', width: '100', playerVars: { 'autoplay': 0, 'controls': 0 } }); }
+        function onYouTubeIframeAPIReady() { 
+            musicPlayer = new YT.Player('music-player-container', { height: '1', width: '1', playerVars: { 'autoplay': 0, 'controls': 0 } });
+            videoWatchPlayer = new YT.Player('video-watch-player', { height: '100%', width: '100%', playerVars: { 'autoplay': 0, 'controls': 1, 'rel': 0 }, events: { 'onStateChange': onVideoWatchPlayerStateChange, 'onReady': onVideoWatchPlayerReady } });
+        }
+
+        // --- MUSIC SYNC --- (Largely unchanged)
         function initMusicSync(chatId) {
             db.ref(`musicState/${chatId}`).on('value', (snapshot) => {
-                if (!ytPlayer || document.getElementById('chat-view').style.display === 'none') return;
+                if (!musicPlayer || document.getElementById('chat-view').style.display === 'none') return;
                 const state = snapshot.val();
                 if (state && state.songId) {
                     document.getElementById('music-player-bar').style.display = 'block';
                     document.getElementById('music-title').textContent = state.title;
                     document.getElementById('music-thumbnail').src = state.thumbnail;
-                    if (ytPlayer.getVideoData().video_id !== state.songId) { ytPlayer.loadVideoById(state.songId, state.currentTime); }
+                    if (musicPlayer.getVideoData().video_id !== state.songId) { musicPlayer.loadVideoById(state.songId, state.currentTime); }
                     const playIcon = document.getElementById('play-icon'); const pauseIcon = document.getElementById('pause-icon');
-                    if (state.isPlaying && ytPlayer.getPlayerState() !== YT.PlayerState.PLAYING) {
-                        ytPlayer.seekTo(state.currentTime, true); ytPlayer.playVideo(); playIcon.style.display = 'none'; pauseIcon.style.display = 'block';
-                    } else if (!state.isPlaying && ytPlayer.getPlayerState() === YT.PlayerState.PLAYING) {
-                        ytPlayer.pauseVideo(); playIcon.style.display = 'block'; pauseIcon.style.display = 'none';
+                    if (state.isPlaying && musicPlayer.getPlayerState() !== YT.PlayerState.PLAYING) {
+                        musicPlayer.seekTo(state.currentTime, true); musicPlayer.playVideo(); playIcon.style.display = 'none'; pauseIcon.style.display = 'block';
+                    } else if (!state.isPlaying && musicPlayer.getPlayerState() === YT.PlayerState.PLAYING) {
+                        musicPlayer.pauseVideo(); playIcon.style.display = 'block'; pauseIcon.style.display = 'none';
                     }
-                } else { document.getElementById('music-player-bar').style.display = 'none'; if (ytPlayer && typeof ytPlayer.stopVideo === 'function') ytPlayer.stopVideo(); }
+                } else { document.getElementById('music-player-bar').style.display = 'none'; if (musicPlayer && typeof musicPlayer.stopVideo === 'function') musicPlayer.stopVideo(); }
             });
             clearInterval(musicUpdateInterval);
             musicUpdateInterval = setInterval(() => {
-                if (!ytPlayer || !currentChatId || typeof ytPlayer.getPlayerState !== 'function') return;
-                const playerState = ytPlayer.getPlayerState();
-                if (playerState === YT.PlayerState.PLAYING) {
-                    const currentTime = ytPlayer.getCurrentTime(); const duration = ytPlayer.getDuration();
-                    if (duration > 0) document.getElementById('music-progress-bar').style.width = (currentTime / duration) * 100 + '%';
-                }
+                if (!musicPlayer || !currentChatId || typeof musicPlayer.getPlayerState !== 'function') return;
+                const playerState = musicPlayer.getPlayerState();
+                if (playerState === YT.PlayerState.PLAYING) { const currentTime = musicPlayer.getCurrentTime(); const duration = musicPlayer.getDuration(); if (duration > 0) document.getElementById('music-progress-bar').style.width = (currentTime / duration) * 100 + '%'; }
             }, 500);
         }
         function updateMusicState(newState) { if (!currentChatId) return; const update = { ...newState, lastUpdatedBy: currentUser.uid, timestamp: firebase.database.ServerValue.TIMESTAMP }; db.ref(`musicState/${currentChatId}`).update(update); }
-        document.getElementById('music-play-pause-btn').addEventListener('click', () => { if (!ytPlayer || typeof ytPlayer.getPlayerState !== 'function') return; const isPlaying = ytPlayer.getPlayerState() === YT.PlayerState.PLAYING; updateMusicState({ isPlaying: !isPlaying, currentTime: ytPlayer.getCurrentTime() }); });
-        document.getElementById('music-progress-container').addEventListener('click', function(e) { if (!ytPlayer || typeof ytPlayer.getDuration !== 'function') return; const duration = ytPlayer.getDuration(); if(!duration) return; const rect = this.getBoundingClientRect(); const x = e.clientX - rect.left; const width = this.offsetWidth; const newTime = (x / width) * duration; ytPlayer.seekTo(newTime, true); updateMusicState({ currentTime: newTime, isPlaying: true }); });
+        document.getElementById('music-play-pause-btn').addEventListener('click', () => { if (!musicPlayer || typeof musicPlayer.getPlayerState !== 'function') return; const isPlaying = musicPlayer.getPlayerState() === YT.PlayerState.PLAYING; updateMusicState({ isPlaying: !isPlaying, currentTime: musicPlayer.getCurrentTime() }); });
+        document.getElementById('music-progress-container').addEventListener('click', function(e) { if (!musicPlayer || typeof musicPlayer.getDuration !== 'function') return; const duration = musicPlayer.getDuration(); if(!duration) return; const rect = this.getBoundingClientRect(); const x = e.clientX - rect.left; const width = this.offsetWidth; const newTime = (x / width) * duration; musicPlayer.seekTo(newTime, true); updateMusicState({ currentTime: newTime, isPlaying: true }); });
         document.getElementById('music-remove-btn').addEventListener('click', () => { if(currentChatId) db.ref(`musicState/${currentChatId}`).remove(); });
-        document.getElementById('music-search-btn').addEventListener('click', () => showModal('music-search-modal'));
-        document.getElementById('close-music-search-modal-btn').addEventListener('click', () => showModal('music-search-modal', false));
-        document.getElementById('music-search-input').addEventListener('input', (e) => { if (e.target.value.length > 2) searchYoutube(e.target.value); });
+
+        // --- VIDEO WATCH SYNC ---
+        let lastStateChangeByRemote = false;
+        function onVideoWatchPlayerReady(event) {
+             setInterval(() => {
+                if(videoWatchPlayer && typeof videoWatchPlayer.getPlayerState === 'function' && videoWatchPlayer.getPlayerState() === YT.PlayerState.PLAYING) {
+                    db.ref(`videoState/${currentChatId}`).update({ currentTime: videoWatchPlayer.getCurrentTime() });
+                }
+            }, 1000);
+        }
+        function onVideoWatchPlayerStateChange(event) {
+            if (lastStateChangeByRemote) { lastStateChangeByRemote = false; return; }
+            let isPlaying = (event.data === YT.PlayerState.PLAYING);
+            db.ref(`videoState/${currentChatId}`).update({ isPlaying: isPlaying, currentTime: videoWatchPlayer.getCurrentTime() });
+        }
+        function initVideoWatchSync(chatId) {
+            db.ref(`videoState/${chatId}`).on('value', (snapshot) => {
+                if (!videoWatchPlayer || document.getElementById('video-watch-view').style.display === 'none') return;
+                const state = snapshot.val();
+                if (state && state.videoId) {
+                    document.getElementById('video-watch-title').textContent = state.title;
+                    if (videoWatchPlayer.getVideoData().video_id !== state.videoId) {
+                        lastStateChangeByRemote = true;
+                        videoWatchPlayer.loadVideoById(state.videoId, state.currentTime);
+                    }
+                    const playerState = videoWatchPlayer.getPlayerState();
+                    const timeDiff = Math.abs(videoWatchPlayer.getCurrentTime() - state.currentTime);
+
+                    if (state.isPlaying && playerState !== YT.PlayerState.PLAYING) {
+                        lastStateChangeByRemote = true;
+                        if(timeDiff > 2) videoWatchPlayer.seekTo(state.currentTime, true);
+                        videoWatchPlayer.playVideo();
+                    } else if (!state.isPlaying && playerState === YT.PlayerState.PLAYING) {
+                        lastStateChangeByRemote = true;
+                        videoWatchPlayer.pauseVideo();
+                    }
+                }
+            });
+        }
+        document.getElementById('close-watch-view-btn').addEventListener('click', () => { showView('chat-view'); db.ref(`videoState/${currentChatId}`).remove(); });
+        document.getElementById('fullscreen-btn').addEventListener('click', () => { 
+            const elem = document.getElementById('video-watch-view');
+            elem.classList.toggle('fullscreen');
+            if (!document.fullscreenElement) { elem.requestFullscreen().catch(err => console.error(err)); } 
+            else { document.exitFullscreen(); }
+        });
+        document.addEventListener('fullscreenchange', () => { if (!document.fullscreenElement) document.getElementById('video-watch-view').classList.remove('fullscreen'); });
+        
+        // --- REACTION SYSTEM ---
+        document.getElementById('reaction-bar').addEventListener('click', (e) => {
+            if(e.target.tagName === 'BUTTON' && currentChatId) {
+                db.ref(`reactions/${currentChatId}`).push(e.target.textContent);
+            }
+        });
+        function listenForReactions(chatId) {
+            db.ref(`reactions/${chatId}`).limitToLast(5).on('child_added', (snapshot) => {
+                const emoji = snapshot.val();
+                const container = document.getElementById('reaction-container');
+                const emojiEl = document.createElement('div');
+                emojiEl.className = 'reaction-emoji';
+                emojiEl.textContent = emoji;
+                container.appendChild(emojiEl);
+                setTimeout(() => emojiEl.remove(), 2000); // Remove after animation
+            });
+        }
+
+        // --- UNIVERSAL SEARCH ---
+        document.getElementById('music-search-btn').addEventListener('click', () => { searchType = 'music'; document.getElementById('search-input').placeholder = "Search for a song..."; showModal('search-modal'); });
+        document.getElementById('movie-search-btn').addEventListener('click', () => { searchType = 'movie'; document.getElementById('search-input').placeholder = "Search for a video..."; showModal('search-modal'); });
+        document.getElementById('close-search-modal-btn').addEventListener('click', () => showModal('search-modal', false));
+        document.getElementById('search-input').addEventListener('input', (e) => { if (e.target.value.length > 2) searchYoutube(e.target.value); });
         async function searchYoutube(query) { const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${query}&type=video&maxResults=10&key=${YOUTUBE_API_KEY}`; try { const response = await fetch(url); const data = await response.json(); displaySearchResults(data.items); } catch (error) { console.error('Error fetching from YouTube API:', error); } }
         function displaySearchResults(items) {
-            const resultsContainer = document.getElementById('music-search-results'); resultsContainer.innerHTML = ''; if(!items) return;
+            const resultsContainer = document.getElementById('search-results'); resultsContainer.innerHTML = ''; if(!items) return;
             items.forEach(item => {
                 const resultDiv = document.createElement('div'); resultDiv.className = 'suggestion-item';
                 resultDiv.innerHTML = `<img src="${item.snippet.thumbnails.default.url}" alt="thumbnail"> <span>${item.snippet.title}</span>`;
-                resultDiv.onclick = () => { updateMusicState({ songId: item.id.videoId, title: item.snippet.title, thumbnail: item.snippet.thumbnails.default.url, isPlaying: true, currentTime: 0 }); showModal('music-search-modal', false); };
+                resultDiv.onclick = () => {
+                    if (searchType === 'music') {
+                        updateMusicState({ songId: item.id.videoId, title: item.snippet.title, thumbnail: item.snippet.thumbnails.default.url, isPlaying: true, currentTime: 0 });
+                    } else { // movie
+                        db.ref(`videoState/${currentChatId}`).set({ videoId: item.id.videoId, title: item.snippet.title, isPlaying: true, currentTime: 0, startedBy: currentUser.uid });
+                        showView('video-watch-view');
+                    }
+                    showModal('search-modal', false);
+                };
                 resultsContainer.appendChild(resultDiv);
             });
         }
